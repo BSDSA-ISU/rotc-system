@@ -1,0 +1,83 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<h1>📊 Dashboard</h1>
+
+<div class="dashboard-grid">
+
+    <div class="kpi-card">
+        <div class="kpi-value">{{ total_attendance }}</div>
+        <div class="kpi-label">Attendance Records</div>
+    </div>
+
+    <div class="kpi-card">
+        <div class="kpi-value">{{ total_equipment }}</div>
+        <div class="kpi-label">Equipment Borrowed</div>
+    </div>
+
+</div>
+
+<div class="chart-box">
+    <h2>Attendance Analytics</h2>
+    <canvas id="attendanceChart"></canvas>
+</div>
+
+<div class="chart-box">
+    <h2>Equipment Analytics</h2>
+    <canvas id="equipmentChart"></canvas>
+</div>
+
+<script>
+
+const attendanceChart = new Chart(
+    document.getElementById('attendanceChart'),
+    {
+        type: 'pie',
+
+        data: {
+            labels: [
+                {% for row in attendance_stats %}
+                    "{{ row.status }}",
+                {% endfor %}
+            ],
+
+            datasets: [{
+                data: [
+                    {% for row in attendance_stats %}
+                        {{ row.count }},
+                    {% endfor %}
+                ]
+            }]
+        }
+    }
+);
+
+const equipmentChart = new Chart(
+    document.getElementById('equipmentChart'),
+    {
+        type: 'bar',
+
+        data: {
+            labels: [
+                {% for row in equipment_stats %}
+                    "{{ row.item }}",
+                {% endfor %}
+            ],
+
+            datasets: [{
+                label: 'Equipment Quantity',
+
+                data: [
+                    {% for row in equipment_stats %}
+                        {{ row.total }},
+                    {% endfor %}
+                ]
+            }]
+        }
+    }
+);
+
+</script>
+
+{% endblock %}

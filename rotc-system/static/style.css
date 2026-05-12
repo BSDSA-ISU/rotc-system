@@ -1,0 +1,116 @@
+:root {
+    --neon-blue: #00d4ff;
+    --dark-bg: #0b0e14;
+    --card-bg: #161b22;
+    --border: #333;
+}
+
+body {
+    margin: 0;
+    background: var(--dark-bg);
+    color: white;
+    font-family: Arial;
+}
+
+.nav {
+    background: #161b22;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.card {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.kpi-card {
+    background: #161b22;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.kpi-value {
+    font-size: 2rem;
+    color: var(--neon-blue);
+    font-weight: bold;
+}
+
+.kpi-label {
+    color: #aaa;
+}
+
+.chart-box {
+    background: #161b22;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: #0d1117;
+    color: white;
+    border: 1px solid #333;
+    border-radius: 6px;
+}
+
+button {
+    margin-top: 15px;
+    padding: 12px 20px;
+    border: none;
+    background: var(--neon-blue);
+    color: black;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #333;
+}
+
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-box {
+    background: #161b22;
+    padding: 40px;
+    border-radius: 10px;
+    width: 300px;
+}

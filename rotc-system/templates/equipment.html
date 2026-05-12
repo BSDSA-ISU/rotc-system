@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<h1>📦 Equipment Management</h1>
+
+<div class="card">
+
+<form action="/add_equipment" method="POST">
+
+    <input type="text" name="borrowerName" placeholder="Borrower Name" required>
+
+    <select name="equipment" required>
+        <option value="">Select Equipment</option>
+        <option>Helmet</option>
+        <option>Rifle Replica</option>
+        <option>Boots</option>
+        <option>Uniform</option>
+        <option>Radio</option>
+    </select>
+
+    <input type="number" name="quantity" placeholder="Quantity" required>
+
+    <input type="date" name="borrowDate" required>
+
+    <button type="submit">Borrow Equipment</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<table>
+
+<thead>
+<tr>
+    <th>Borrower</th>
+    <th>Item</th>
+    <th>Quantity</th>
+    <th>Date</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for item in records %}
+
+<tr>
+    <td>{{ item.borrower }}</td>
+    <td>{{ item.item }}</td>
+    <td>{{ item.quantity }}</td>
+    <td>{{ item.borrow_date }}</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}
