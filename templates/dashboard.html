@@ -28,6 +28,19 @@
     <canvas id="equipmentChart"></canvas>
 </div>
 
+<div class="chart-box">
+    <h2>Equipment Status Overview</h2>
+    <canvas id="equipmentStatusChart"></canvas>
+</div>
+
+<section class="container">
+    <div class="hero">
+        <h2 id="members" style="color: var(--accent);">Development Team</h2>
+        <p>The developers behind ROTC System.</p>
+</div>
+
+{% include '/partials/devteam.html' %}
+
 <script>
 
 const attendanceChart = new Chart(
@@ -74,6 +87,48 @@ const equipmentChart = new Chart(
                     {% endfor %}
                 ]
             }]
+        }
+    }
+);
+
+const equipmentStatusChart = new Chart(
+    document.getElementById('equipmentStatusChart'),
+    {
+        type: 'bar',
+        data: {
+            labels: [
+                {% for row in equipment_status_stats %}
+                    "{{ row.status }}",
+                {% endfor %}
+            ],
+            datasets: [{
+                label: 'Equipment Status',
+                data: [
+                    {% for row in equipment_status_stats %}
+                        {{ row.count }},
+                    {% endfor %}
+                ],
+                backgroundColor: [
+                    'rgba(61, 220, 132, 0.6)',
+                    'rgba(239, 68, 68, 0.6)'
+                ],
+                borderColor: [
+                    '#3ddc84',
+                    '#ef4444'
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
         }
     }
 );

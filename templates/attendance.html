@@ -1,0 +1,178 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<h1>📋 Attendance Management</h1>
+
+<div class="card">
+
+<form
+    action="{% if edit_record %}/edit_attendance/{{ edit_record.id }}{% else %}/add_attendance{% endif %}"
+    method="POST"
+>
+
+    <input
+        type="text"
+        name="name"
+        placeholder="Cadet Name"
+        required
+        value="{{ edit_record.name if edit_record else '' }}"
+    >
+
+    <select name="rank" required>
+
+        <option value="">Select Rank</option>
+
+        <option
+            {% if edit_record and edit_record.rank == 'Cadet' %}selected{% endif %}
+        >
+            Cadet
+        </option>
+
+        <option
+            {% if edit_record and edit_record.rank == 'Corporal' %}selected{% endif %}
+        >
+            Corporal
+        </option>
+
+        <option
+            {% if edit_record and edit_record.rank == 'Sergeant' %}selected{% endif %}
+        >
+            Sergeant
+        </option>
+
+        <option
+            {% if edit_record and edit_record.rank == 'Lieutenant' %}selected{% endif %}
+        >
+            Lieutenant
+        </option>
+
+    </select>
+
+    <select name="platoon" required>
+
+        <option value="">Select Platoon</option>
+
+        <option
+            {% if edit_record and edit_record.platoon == 'Alpha' %}selected{% endif %}
+        >
+            Alpha
+        </option>
+
+        <option
+            {% if edit_record and edit_record.platoon == 'Bravo' %}selected{% endif %}
+        >
+            Bravo
+        </option>
+
+        <option
+            {% if edit_record and edit_record.platoon == 'Charlie' %}selected{% endif %}
+        >
+            Charlie
+        </option>
+
+    </select>
+
+    <select name="status" required>
+
+        <option value="">Status</option>
+
+        <option
+            {% if edit_record and edit_record.status == 'Present' %}selected{% endif %}
+        >
+            Present
+        </option>
+
+        <option
+            {% if edit_record and edit_record.status == 'Late' %}selected{% endif %}
+        >
+            Late
+        </option>
+
+        <option
+            {% if edit_record and edit_record.status == 'Absent' %}selected{% endif %}
+        >
+            Absent
+        </option>
+
+    </select>
+
+    <input
+        type="date"
+        name="date"
+        required
+        value="{{ edit_record.date_recorded if edit_record else '' }}"
+    >
+
+    <button type="submit">
+        {% if edit_record %}
+            Update Attendance
+        {% else %}
+            Add Attendance
+        {% endif %}
+    </button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<table>
+
+<thead>
+<tr>
+    <th>Name</th>
+    <th>Rank</th>
+    <th>Platoon</th>
+    <th>Status</th>
+    <th>Date</th>
+    <th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for row in records %}
+
+<tr>
+
+    <td>{{ row.name }}</td>
+    <td>{{ row.rank }}</td>
+    <td>{{ row.platoon }}</td>
+    <td>{{ row.status }}</td>
+    <td>{{ row.date_recorded }}</td>
+
+    <td>
+    
+        <div class="action-buttons">
+        
+            <a
+                href="/attendance?edit={{ row.id }}"
+                class="edit-btn"
+            >
+                ✏ Edit
+            </a>
+        
+            <a
+                href="/delete_attendance/{{ row.id }}"
+                class="delete-btn"
+                onclick="return confirm('Delete this record?')"
+            >
+                🗑 Delete
+            </a>
+        
+        </div>
+    
+    </td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

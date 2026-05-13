@@ -19,7 +19,7 @@
         <option>Radio</option>
     </select>
 
-    <input type="number" name="quantity" placeholder="Quantity" required>
+    <input type="number" name="quantity" placeholder="Quantity" min="1" required>
 
     <input type="date" name="borrowDate" required>
 
@@ -39,6 +39,8 @@
     <th>Item</th>
     <th>Quantity</th>
     <th>Date</th>
+    <th>Status</th>
+    <th>Actions</th>
 </tr>
 </thead>
 
@@ -47,10 +49,31 @@
 {% for item in records %}
 
 <tr>
+
     <td>{{ item.borrower }}</td>
     <td>{{ item.item }}</td>
     <td>{{ item.quantity }}</td>
     <td>{{ item.borrow_date }}</td>
+
+    <td>
+        {% if item.status == 'Returned' %}
+            <span class="badge returned">Returned</span>
+        {% else %}
+            <span class="badge borrowed">Borrowed</span>
+        {% endif %}
+    </td>
+
+    <td>
+        {% if item.status != 'Returned' %}
+        <a class="edit-btn"
+           href="/return_equipment/{{ item.id }}">
+            Return
+        </a>
+        {% else %}
+        <span style="opacity:0.5;">Done</span>
+        {% endif %}
+    </td>
+
 </tr>
 
 {% endfor %}

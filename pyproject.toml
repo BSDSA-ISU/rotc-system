@@ -1,0 +1,13 @@
+[project]
+name = "rotc-system3"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "cryptography>=47.0.0",
+    "dotenv>=0.9.9",
+    "flask>=3.1.3",
+    "gunicorn>=25.3.0",
+    "pymysql>=1.1.2",
+]

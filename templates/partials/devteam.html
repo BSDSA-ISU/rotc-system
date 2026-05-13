@@ -1,0 +1,33 @@
+<div class="devteam-section">
+    <div class="devteam-grid">
+        {% for member in members %}
+        <div class="dev-card" style="--accent: {{ member[8] }};">
+            
+            <div class="dev-header">
+                <img src="{{ member[5] }}" alt="{{ member[1] }}" class="dev-avatar">
+
+                <div class="dev-info">
+                    <h3>{{ member[1] }}</h3>
+                    <span class="dev-username">@{{ member[2] }}</span>
+                    <span class="dev-role">{{ member[3] }}</span>
+                </div>
+            </div>
+
+            <p class="dev-bio">
+                {{ member[4] }}
+            </p>
+
+            <div class="dev-links">
+                {% if member[6] %}
+                <a href="{{ member[6] }}" target="_blank">📂 GitHub</a>
+                {% endif %}
+
+                {% if member[7] %}
+                <a href="{{ member[7] }}" target="_blank" class="secondary">🔗 Facebook</a>
+                {% endif %}
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>

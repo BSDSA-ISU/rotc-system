@@ -82,6 +82,10 @@ CREATE TABLE equipment (
 
     borrow_date DATE NOT NULL,
 
+    return_date DATE DEFAULT NULL,
+
+    status ENUM('Borrowed', 'Returned') DEFAULT 'Borrowed',
+
     submitted_by VARCHAR(50),
 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -132,41 +136,47 @@ INSERT INTO team_members
     facebook_link,
     accent_color
 )
-VALUES
-
+VALUES 
 (
-    'Adrian Intel Pil V. De Vera',
-    'Intedesu',
-    'System Architect',
-    'ROTC Command Center Lead Developer.',
-    '/static/images/intel.jpg',
-    'https://github.com/Inteldesu',
-    'https://facebook.com/',
+"Lovelee Flomarjoy T. Madamba",
+"asdfghjkl_lvlee",
+"ganda lang",
+"it's for me to know and it's for you to find out",
+"/static/Madamba.jpg",
+NULL,
+"https://www.facebook.com/share/18QDHB69Wc/",
+'#ff00ea'
+),
+(
+"Nelo M. Cabab",
+"Nelshima",
+"core user",
+"Mabait",
+"/static/nelo.jpg",
+NULL,
+"https://www.facebook.com/share/1EFi9LAXbV/",
+"#FFC0CB"
+),
+(
+    'Adrian Intel Pil V. De Vera', 
+    'Intedesu', 
+    'Role model', 
+    'mas mabait.', 
+    '/static/intel.jpg', 
+    NULL, 
+    'https://www.facebook.com/AdrianIntelDeVera25', 
     '#7F00FF'
 ),
-
 (
-    'Cyrus Troy Bazar',
-    'Alieelinux',
-    'Backend Developer',
-    'Specialized in backend systems and infrastructure.',
-    '/static/images/cyrus.jpg',
-    'https://github.com/Alieelinux',
-    'https://facebook.com/',
-    '#ff00ea'
-),
-
-(
-    'Mark Jhon Paul L. Pace',
-    'idgaf_pcee',
-    'Frontend Developer',
-    'Handles frontend UI and user experience.',
-    '/static/images/pace.jpg',
-    NULL,
-    'https://facebook.com/',
+    'Mark Jhon Paul L. Pace', 
+    'idgaf_pcee', 
+    'Pabohat', 
+    "it's all about me.", 
+    '/static/pace.jpg', 
+    NULL, 
+    'https://www.facebook.com/mrkyohan/', 
     '#BA8E23'
 );
-
 -- =========================================
 -- SAMPLE ATTENDANCE DATA
 -- =========================================
@@ -186,15 +196,14 @@ VALUES
 -- =========================================
 
 INSERT INTO equipment
-(borrower, item, quantity, borrow_date, submitted_by)
+(borrower, item, quantity, borrow_date, status, submitted_by)
 VALUES
 
-('Juan Dela Cruz', 'Helmet', 2, '2026-05-12', 'admin'),
+('Juan Dela Cruz', 'Helmet', 2, '2026-05-12', 'Borrowed', 'admin'),
 
-('Pedro Santos', 'Radio', 1, '2026-05-12', 'admin'),
+('Pedro Santos', 'Radio', 1, '2026-05-12', 'Returned', 'admin'),
 
-('Maria Clara', 'Boots', 1, '2026-05-12', 'admin');
-
+('Maria Clara', 'Boots', 1, '2026-05-12', 'Borrowed', 'admin');
 -- =========================================
 -- DASHBOARD ANALYTICS QUERIES
 -- =========================================

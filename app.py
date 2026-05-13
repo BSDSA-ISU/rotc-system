@@ -1,12 +1,15 @@
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Blueprint, Flask, render_template, request, redirect, session, url_for
 import pymysql
 from dotenv import load_dotenv
+from libraries.crud import crud_bp
 import os
 
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = 'rotc_secret_key'
+
+app.register_blueprint(crud_bp)
 
 # DATABASE CONFIG
 db_config = {
@@ -17,8 +20,22 @@ db_config = {
     'cursorclass': pymysql.cursors.DictCursor
 }
 
+
+db_config2 = {
+    'host': os.getenv("DB_SERVER"),
+    'user': os.getenv("DB_USER"),
+    'password': os.getenv("DB_PASSWORD"),
+    'database': os.getenv("DB_DATABASE"),
+    'cursorclass': pymysql.cursors.Cursor
+}
+
 def get_db():
     return pymysql.connect(**db_config)
+
+def connect_db():
+    return pymysql.connect(
+        **db_config2
+    )
 
 # =========================
 # LOGIN
@@ -41,6 +58,9 @@ def login():
             )
 
             user = cursor.fetchone()
+        
+            cursor.execute("SELECT * FROM team_members")
+            members = cursor.fetchall()
 
         conn.close()
 
@@ -62,6 +82,11 @@ def dashboard():
         return redirect(url_for('login'))
 
     conn = get_db()
+
+    member_connect = connect_db()
+    currr = member_connect.cursor()
+    currr.execute("SELECT * FROM team_members")
+    members = currr.fetchall()
 
     with conn.cursor() as cursor:
 
@@ -85,6 +110,13 @@ def dashboard():
         cursor.execute("SELECT COUNT(*) AS total FROM equipment")
         total_equipment = cursor.fetchone()['total']
 
+        cursor.execute("""
+            SELECT status, COUNT(*) AS count
+            FROM equipment
+            GROUP BY status
+        """)
+        equipment_status_stats = cursor.fetchall()
+
     conn.close()
 
     return render_template(
@@ -92,28 +124,14 @@ def dashboard():
         attendance_stats=attendance_stats,
         equipment_stats=equipment_stats,
         total_attendance=total_attendance,
-        total_equipment=total_equipment
+        total_equipment=total_equipment,
+        members=members,
+        equipment_status_stats=equipment_status_stats
     )
 
 # =========================
 # ATTENDANCE
 # =========================
-
-@app.route('/attendance')
-def attendance():
-
-    if 'user' not in session:
-        return redirect(url_for('login'))
-
-    conn = get_db()
-
-    with conn.cursor() as cursor:
-        cursor.execute("SELECT * FROM attendance")
-        records = cursor.fetchall()
-
-    conn.close()
-
-    return render_template('attendance.html', records=records)
 
 # =========================
 # ADD ATTENDANCE
@@ -164,6 +182,8 @@ def equipment():
 
     return render_template('equipment.html', records=records)
 
+
+
 # =========================
 # LOGOUT
 # =========================
@@ -174,4 +194,4 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5002)
