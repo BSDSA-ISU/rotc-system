@@ -637,3 +637,62 @@ td a:hover {
 .dev-links a.secondary:hover {
     background: rgba(125, 211, 252, 0.15);
 }
+
+input[type="date"] {
+  position: relative;
+  padding: 10px;
+  border: 2px solid #3b82f6;
+  border-radius: 8px;
+}
+
+/* hide default icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  right: 10px;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.date-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.date-wrapper input[type="date"] {
+  padding-right: 45px;
+}
+
+/* custom button */
+.date-wrapper::after {
+  content: "📅";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #23a200;
+  color: white;
+  padding: 6px 8px;
+  border-radius: 6px;
+  pointer-events: none;
+  font-size: 14px;
+}
+
+/* Update your existing .chart-box */
+.chart-box {
+    background: linear-gradient(145deg, #132118, #0f1913);
+    border-radius: var(--radius);
+    padding: 25px;
+    margin: 25px auto; /* Centers the box */
+    border: 1px solid var(--border);
+    
+    /* ADD THESE LINES */
+    max-width: 90%;  /* Limits how wide the chart can get */
+    width: 90%;       /* Ensures responsiveness on small screens */
+}
+
+/* Optional: Make Pie charts even smaller since they naturally look bigger */
+.chart-box:has(#attendanceChart) {
+    max-width: 850px;
+}
